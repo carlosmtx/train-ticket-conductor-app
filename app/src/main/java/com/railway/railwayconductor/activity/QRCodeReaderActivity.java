@@ -14,6 +14,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.railway.railwayconductor.R;
+import com.railway.railwayconductor.activity.listener.QRCodeReaderOnStart;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnVerifyClick;
 
 import java.sql.Array;
@@ -27,10 +28,10 @@ public class QRCodeReaderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_reader);
-
+        new QRCodeReaderOnStart().execute();
         PieChart chart = (PieChart) findViewById(R.id.chart);
         PieDataSet dataSet = new PieDataSet(
-                new ArrayList<Entry>(Arrays.asList(
+                new ArrayList<>(Arrays.asList(
                         new Entry(90f,0),
                         new Entry(10f,1)
                 )),

@@ -10,6 +10,9 @@ import com.google.gson.JsonSerializer;
 import com.railway.railwayconductor.business.api.entity.Ticket;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 
 /**
@@ -31,6 +34,12 @@ public class TicketGSONAdapter implements JsonSerializer<Ticket>, JsonDeserializ
 
     @Override
     public Ticket deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+/*        JsonObject ticketJson = json.getAsJsonObject();
+        try {
+            return new Ticket(new JSONObject(ticketJson));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
         return null;
     }
 }

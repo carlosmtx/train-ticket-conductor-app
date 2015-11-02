@@ -1,11 +1,14 @@
 package com.railway.railwayconductor.business.api.storage;
 
 import com.railway.railwayconductor.business.api.entity.Railway;
+import com.railway.railwayconductor.business.api.entity.Ticket;
 import com.railway.railwayconductor.business.api.entity.User;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by cteixeira on 21-10-2015.
@@ -14,13 +17,14 @@ import java.util.HashMap;
 public class RailwayStorage implements Storage {
     private HashMap<String,String> storage;
     private HashMap<String,JSONObject> responseStorage;
-
+    private List<Ticket> tickets;
     private Railway schedule;
     private User user;
 
     public RailwayStorage() {
         this.storage = new HashMap<>();
         this.responseStorage = new HashMap<>();
+        this.tickets = new ArrayList<>();
     }
 
     @Override
@@ -61,6 +65,17 @@ public class RailwayStorage implements Storage {
     @Override
     public JSONObject getCachedResult(String call) {
         return responseStorage.get(call);
+    }
+
+    @Override
+    public List<Ticket> getTickets(){
+        return new ArrayList<>(this.tickets);
+    }
+
+    @Override
+    public Storage setTickets(List<Ticket> val){
+        this.tickets = new ArrayList<>(val);
+        return this;
     }
 
 

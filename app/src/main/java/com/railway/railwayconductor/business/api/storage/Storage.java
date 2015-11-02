@@ -2,9 +2,12 @@ package com.railway.railwayconductor.business.api.storage;
 
 
 import com.railway.railwayconductor.business.api.entity.Railway;
+import com.railway.railwayconductor.business.api.entity.Ticket;
 import com.railway.railwayconductor.business.api.entity.User;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by cteixeira on 21-10-2015.
@@ -25,4 +28,7 @@ public interface Storage {
     JSONObject getCachedResult(String call);
 
 
+    List<Ticket> getTickets();
+
+    Storage setTickets(List<Ticket> val);
 }
