@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class QRCodeReaderActivity extends AppCompatActivity {
+public class QRCodeReaderActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

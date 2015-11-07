@@ -32,12 +32,25 @@
             android:name=".activity.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+            android:windowSoftInputMode="adjustPan|stateVisible">
         </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activity.SelectStationsActivity"
+            android:label="@string/title_activity_select_schedule" >
+        </activity>
+        <activity
+            android:name=".activity.SelectTimetableActivity"
+            android:label="@string/title_activity_select_time_table" >
+        </activity>
+        <activity
+            android:name=".activity.MenuActivity"
+            android:label="@string/title_activity_menu" >
+        </activity>
     </application>
 
 </manifest>

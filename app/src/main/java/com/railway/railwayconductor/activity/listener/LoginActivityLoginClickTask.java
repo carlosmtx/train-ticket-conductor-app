@@ -6,9 +6,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.railway.railwayconductor.activity.LoginActivity;
-import com.railway.railwayconductor.activity.QRCodeReaderActivity;
+import com.railway.railwayconductor.activity.SelectStationsActivity;
 import com.railway.railwayconductor.business.api.entity.Inspector;
-import com.railway.railwayconductor.business.api.entity.User;
 import com.railway.railwayconductor.business.api.request.AuthRequest;
 import com.railway.railwayconductor.business.api.request.AuthRequestData;
 
@@ -47,7 +46,7 @@ public class LoginActivityLoginClickTask extends AsyncTask<String,Void,Inspector
         ((LoginActivity) activity).enableButtons();
         if (response != null){
             toast = Toast.makeText(activity,"Logging in...",Toast.LENGTH_LONG);
-            Intent intent = new Intent(activity, QRCodeReaderActivity.class);
+            Intent intent = new Intent(activity, SelectStationsActivity.class);
             activity.startActivity(intent);
         } else {
             toast = Toast.makeText(activity,"Please verify your credentials!",Toast.LENGTH_SHORT);

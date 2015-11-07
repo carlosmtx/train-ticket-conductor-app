@@ -7,6 +7,6 @@
     <string name="prompt_password">password</string>
     <string name="action_sign_in">Login</string>
 
-    <string name="info">Test Credentials: a,a (email,password)</string>
+    <string name="login_info">Railway Inspector</string>
 
 </resources>
