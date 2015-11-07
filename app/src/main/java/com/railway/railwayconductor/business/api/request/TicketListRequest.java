@@ -2,6 +2,7 @@ package com.railway.railwayconductor.business.api.request;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.business.api.API;
@@ -9,6 +10,7 @@ import com.railway.railwayconductor.business.api.entity.Ticket;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +22,24 @@ import java.util.concurrent.TimeoutException;
  *
  */
 public class TicketListRequest implements APIRequest{
-    public final RequestFuture<JSONArray> future ;
+    public final RequestFuture<JSONObject> future ;
     private final API api;
-    JsonArrayRequest request;
+    JsonObjectRequest request;
 
 
-    public TicketListRequest(){
-        String url = "https://cmovtrainserver.herokuapp.com/ticket";
+    public TicketListRequest(TicketListRequestData data) throws JSONException {
+        String url = "https://cmovtrainserver.herokuapp.com/inspector/trip";
+
+        JSONObject postData = new JSONObject()
+                .put("departure", data.departure)
+                .put("arrival", data.arrival)
+                .put("departureTime", data.timestamp);
+
         future = RequestFuture.newFuture();
-        request = new JsonArrayRequest(
+        request = new JsonObjectRequest(
+                Request.Method.POST,
                 url,
+                postData,
                 future,
                 future
         );
@@ -39,13 +49,18 @@ public class TicketListRequest implements APIRequest{
     public Request getRequest()  {
         return request;
     }
-    public List<Ticket> getResponse() throws ExecutionException, InterruptedException, TimeoutException, JSONException {
+    public int getResponse() throws ExecutionException, InterruptedException, TimeoutException, JSONException {
         api.request(this);
-        JSONArray responseJson = future.get();
-        List<Ticket> response = new ArrayList<Ticket>();
-        for(int i = 0 ; i < responseJson.length() ; i++){
-            response.add(new Ticket(responseJson.getJSONObject(i)));
-        }
-        return response;
+        JSONObject responseJson = future.get();
+
+        //List<Ticket> tickets = new ArrayList<Ticket>();
+        //JSONArray arr = responseJson.getJSONArray("tickets");
+        //for(int i = 0 ; i < arr.length() ; i++){
+            //    tickets.add(new Ticket(arr.getJSONObject(i)));
+            //}
+        //
+        //DI.get().provideStorage().setTickets(tickets);
+
+        return (int) responseJson.get("size");
     }
 }

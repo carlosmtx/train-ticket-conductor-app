@@ -16,7 +16,6 @@ public class Ticket implements Serializable {
     private boolean validated;
     private float price;
     private String departureTime;
-    private String departureDate;
     private String signature;
 
 
@@ -28,7 +27,6 @@ public class Ticket implements Serializable {
         this.validated = (boolean) t.get("validated");
         this.price = Float.valueOf(t.get("price").toString());
         this.departureTime =  t.get("departureTime").toString();
-        this.departureDate =  t.get("departureDate").toString();
         this.signature = t.get("signature").toString();
 
     }
@@ -54,10 +52,6 @@ public class Ticket implements Serializable {
 
     public String getDepartureTime() {
         return departureTime;
-    }
-
-    public String getDepartureDate() {
-        return departureDate;
     }
 
     public String getSignature() {
