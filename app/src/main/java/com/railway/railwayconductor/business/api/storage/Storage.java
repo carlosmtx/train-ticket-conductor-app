@@ -1,6 +1,7 @@
 package com.railway.railwayconductor.business.api.storage;
 
 
+import com.railway.railwayconductor.business.api.entity.Inspector;
 import com.railway.railwayconductor.business.api.entity.Railway;
 import com.railway.railwayconductor.business.api.entity.Ticket;
 import com.railway.railwayconductor.business.api.entity.User;
@@ -21,8 +22,8 @@ public interface Storage {
     Railway getSchedule();
     void setSchedule(Railway schedule);
 
-    User getUser();
-    void setUser(User user);
+    Inspector getInspector();
+    void setUser(Inspector ins);
 
     void cacheResult(String call, JSONObject response);
     JSONObject getCachedResult(String call);

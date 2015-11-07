@@ -1,5 +1,6 @@
 package com.railway.railwayconductor.business.api.storage;
 
+import com.railway.railwayconductor.business.api.entity.Inspector;
 import com.railway.railwayconductor.business.api.entity.Railway;
 import com.railway.railwayconductor.business.api.entity.Ticket;
 import com.railway.railwayconductor.business.api.entity.User;
@@ -19,7 +20,8 @@ public class RailwayStorage implements Storage {
     private HashMap<String,JSONObject> responseStorage;
     private List<Ticket> tickets;
     private Railway schedule;
-    private User user;
+    private Inspector inspector;
+
 
     public RailwayStorage() {
         this.storage = new HashMap<>();
@@ -48,14 +50,15 @@ public class RailwayStorage implements Storage {
     }
 
     @Override
-    public User getUser() {
-        return this.user;
+    public Inspector getInspector() {
+        return this.inspector;
     }
 
     @Override
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Inspector ins) {
+        this.inspector = ins;
     }
+
 
     @Override
     public void cacheResult(String call, JSONObject response){
