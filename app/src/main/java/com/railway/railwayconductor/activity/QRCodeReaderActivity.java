@@ -14,6 +14,12 @@ import com.google.zxing.integration.android.IntentResult;
 import com.railway.railwayconductor.R;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnStart;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnVerifyClick;
+import com.railway.railwayconductor.business.api.entity.Ticket;
+import com.railway.railwayconductor.business.security.Signature.SignatureValidator;
+import com.railway.railwayconductor.business.security.Ticket.SecureTicket;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,20 +42,28 @@ public class QRCodeReaderActivity extends MenuActivity {
         findViewById(R.id.qrcodereader_verify_button).setOnClickListener(new QRCodeReaderOnVerifyClick());
     }
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
-            TextView view = (TextView)this.findViewById(R.id.result);
-            view.setText(scanResult.getContents());
-            view.invalidate();
+        try {
+
+            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+            if (scanResult != null) {
+                TextView view = (TextView) this.findViewById(R.id.result);
+                Ticket ticket = new Ticket(new JSONObject(scanResult.getContents()));
+                SecureTicket ticketSec = new SecureTicket(ticket);
+                view.setText( ticketSec.isValid() ? "valid" : scanResult.getContents());
+                view.invalidate();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
     }
 
     public PieChart initializeChart(){
         PieChart chart = (PieChart) findViewById(R.id.chart);
         PieDataSet dataSet = new PieDataSet(
                 new ArrayList<>(Arrays.asList(
-                        new Entry(100,0),
-                        new Entry(0,1)
+                        new Entry(20,0),
+                        new Entry(2,1)
                 )),
                 "Tickets"
         );
