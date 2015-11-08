@@ -21,6 +21,6 @@ public class Inspector {
         this.name = (response.isNull("name")) ? "" : (response.get("name").toString());
         this.email = response.get("email").toString();
         this.token = response.get("token").toString();
-        //this.publicKey = response.get("publicKey").toString();
+        this.publicKey = response.get("publicKey").toString();
     }
 }
