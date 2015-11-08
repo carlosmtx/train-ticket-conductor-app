@@ -15,7 +15,6 @@ import com.railway.railwayconductor.R;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnStart;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnVerifyClick;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +37,10 @@ public class QRCodeReaderActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_reader);
+
+        this.arrival = getIntent().getStringExtra("arrival");
+        this.departure = getIntent().getStringExtra("departure");
+        this.timestamp = getIntent().getStringExtra("departureTime");
 
         this.chart = initializeChart();
         this.infoTrip = (TextView) findViewById(R.id.result);
