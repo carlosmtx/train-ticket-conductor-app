@@ -15,66 +15,64 @@ import com.railway.railwayconductor.R;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnStart;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnVerifyClick;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
 public class QRCodeReaderActivity extends MenuActivity {
+    // Esta viagem tem 2 bilhetes
     public String departure = "Station A";
     public String arrival = "Station B";
     public String timestamp = "1422820800000";
 
     public PieChart chart;
-    PieDataSet dataSet;
+    private int totalTickets;
+    private int usedTickets;
+
+    TextView infoTrip;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_reader);
+
         this.chart = initializeChart();
+        this.infoTrip = (TextView) findViewById(R.id.result);
+        this.infoTrip.setText(departure + " to " + arrival + " on " + new Timestamp(Long.parseLong(timestamp)).toString());
+
         new QRCodeReaderOnStart(this).execute();
         findViewById(R.id.qrcodereader_verify_button).setOnClickListener(new QRCodeReaderOnVerifyClick());
     }
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
-            TextView view = (TextView)this.findViewById(R.id.result);
-            view.setText(scanResult.getContents());
-            view.invalidate();
+            infoTrip.setText(scanResult.getContents());
+            refreshChartData(true);
+
+            // TODO: Comparar SHA1 do bilhete com signature desencriptada
         }
     }
 
     public PieChart initializeChart(){
         PieChart chart = (PieChart) findViewById(R.id.chart);
-        PieDataSet dataSet = new PieDataSet(
-                new ArrayList<>(Arrays.asList(
-                        new Entry(100,0),
-                        new Entry(0,1)
-                )),
-                "Tickets"
-        );
-
-        dataSet.setSliceSpace(2f);
-        dataSet.setSelectionShift(5f);
-
-        dataSet.setColors(Arrays.asList(Color.rgb(136, 170, 255), Color.rgb(239, 155, 15)));
-        PieData data = new PieData(
-                new ArrayList<>(Arrays.asList("", "")),
-                dataSet
-        );
-
-        chart.setData(data);
         chart.notifyDataSetChanged();
         chart.invalidate();
         return chart;
     }
 
-    public void refreshChartData(int noTickets){
+    public void refreshChartData(boolean subtractOne){
+        if(subtractOne){
+            this.totalTickets--;
+            this.usedTickets++;
+        }
 
         PieDataSet dataSet = new PieDataSet(
                 new ArrayList<>(Arrays.asList(
-                        new Entry(noTickets,0),
-                        new Entry(0,1)
+                        new Entry(totalTickets,0),
+                        new Entry(usedTickets,1)
                 )),
                 "Tickets"
         );
@@ -84,12 +82,20 @@ public class QRCodeReaderActivity extends MenuActivity {
         dataSet.setColors(Arrays.asList(Color.rgb(136, 170, 255), Color.rgb(239, 155, 15)));
 
         this.chart.setData(new PieData(
-                new ArrayList<>(Arrays.asList("", "")),
+                new ArrayList<>(Arrays.asList("Total", "Validated")),
                 dataSet
         ));
         this.chart.invalidate();
     }
 
+
+    public void setTotalTickets(int totalTickets) {
+        this.totalTickets = totalTickets;
+    }
+
+    public void setUsedTickets(int usedTickets) {
+        this.usedTickets = usedTickets;
+    }
 
 
 

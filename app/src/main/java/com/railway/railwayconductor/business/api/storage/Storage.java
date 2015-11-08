@@ -8,6 +8,7 @@ import com.railway.railwayconductor.business.api.entity.User;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,8 +29,13 @@ public interface Storage {
     void cacheResult(String call, JSONObject response);
     JSONObject getCachedResult(String call);
 
+    String getPublicKey();
+    void setPublicKey(String publicKey);
+
+    // Quando termina uma viagem, o Inspector envia para o servidor os ID's dos bilhetes validados
+    void addValidatedTicketID(String id);
+    ArrayList<String> getValidatedIDs();
 
     List<Ticket> getTickets();
-
     Storage setTickets(List<Ticket> val);
 }
