@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.R;
 import com.railway.railwayconductor.activity.listener.LogoutTask;
+import com.railway.railwayconductor.activity.listener.ValidateTicketsTask;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -31,6 +34,9 @@ public class MenuActivity extends AppCompatActivity {
         }
         else if(id == R.id.menu_logout){
             new LogoutTask(this);
+        }
+        else if(id == R.id.menu_validate){
+            new ValidateTicketsTask(this).execute();
         }
 
 

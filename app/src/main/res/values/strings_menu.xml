@@ -2,4 +2,5 @@
 <resources>
     <string name="menu_select_schedule">Select Schedule</string>
     <string name="menu_logout">Logout</string>
+    <string name="menu_validate_test">Validate Test</string>
 </resources>

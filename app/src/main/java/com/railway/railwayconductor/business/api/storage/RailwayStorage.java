@@ -29,6 +29,7 @@ public class RailwayStorage implements Storage {
         this.storage = new HashMap<>();
         this.responseStorage = new HashMap<>();
         this.tickets = new ArrayList<>();
+        this.validatedIDs = new ArrayList<>();
     }
 
     @Override
