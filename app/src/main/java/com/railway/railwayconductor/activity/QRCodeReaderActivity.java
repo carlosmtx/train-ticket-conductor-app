@@ -85,7 +85,7 @@ public class QRCodeReaderActivity extends MenuActivity {
                 new ArrayList<>(Arrays.asList("Total", "Validated")),
                 dataSet
         ));
-        this.chart.invalidate();
+        this.chart.notifyDataSetChanged();
     }
 
 
