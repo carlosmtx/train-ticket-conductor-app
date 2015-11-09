@@ -26,7 +26,6 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.QRCodeReaderActivity"
-            android:exported="true"
             android:label="@string/title_activity_qrcode_reader" >
         </activity>
         <activity
