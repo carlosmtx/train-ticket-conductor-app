@@ -18,77 +18,76 @@ import com.railway.railwayconductor.business.api.entity.Ticket;
 import com.railway.railwayconductor.business.security.Signature.SignatureValidator;
 import com.railway.railwayconductor.business.security.Ticket.SecureTicket;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
 public class QRCodeReaderActivity extends MenuActivity {
+    // Esta viagem tem 2 bilhetes
     public String departure = "Station A";
     public String arrival = "Station B";
     public String timestamp = "1422820800000";
 
     public PieChart chart;
-    PieDataSet dataSet;
+    private int totalTickets;
+    private int usedTickets;
+
+    TextView infoTrip;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_reader);
+
+        this.arrival = getIntent().getStringExtra("arrival");
+        this.departure = getIntent().getStringExtra("departure");
+        this.timestamp = getIntent().getStringExtra("departureTime");
+
         this.chart = initializeChart();
+        this.infoTrip = (TextView) findViewById(R.id.result);
+        //this.infoTrip.setText(departure + " to " + arrival + " on " + new Timestamp(Long.parseLong(timestamp)).toString());
+
         new QRCodeReaderOnStart(this).execute();
         findViewById(R.id.qrcodereader_verify_button).setOnClickListener(new QRCodeReaderOnVerifyClick());
     }
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        try {
-
+        try{
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
             if (scanResult != null) {
-                TextView view = (TextView) this.findViewById(R.id.result);
-                Ticket ticket = new Ticket(new JSONObject(scanResult.getContents()));
-                SecureTicket ticketSec = new SecureTicket(ticket);
-                view.setText( ticketSec.isValid() ? "valid" : scanResult.getContents());
-                view.invalidate();
+                infoTrip.setText(scanResult.getContents());
+                refreshChartData(true);
+                SecureTicket ticket = new SecureTicket(new Ticket(new JSONObject(scanResult.getContents())));
+                SignatureValidator sv = new SignatureValidator(ticket,ticket);
+                sv.validate();
+                TextView tv = (TextView) findViewById(R.id.result);
+                tv.setText(sv.validate() ? "Deu" : scanResult.getContents());
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
 
     }
 
     public PieChart initializeChart(){
         PieChart chart = (PieChart) findViewById(R.id.chart);
-        PieDataSet dataSet = new PieDataSet(
-                new ArrayList<>(Arrays.asList(
-                        new Entry(20,0),
-                        new Entry(2,1)
-                )),
-                "Tickets"
-        );
-
-        dataSet.setSliceSpace(2f);
-        dataSet.setSelectionShift(5f);
-
-        dataSet.setColors(Arrays.asList(Color.rgb(136, 170, 255), Color.rgb(239, 155, 15)));
-        PieData data = new PieData(
-                new ArrayList<>(Arrays.asList("", "")),
-                dataSet
-        );
-
-        chart.setData(data);
         chart.notifyDataSetChanged();
         chart.invalidate();
         return chart;
     }
 
-    public void refreshChartData(int noTickets){
+    public void refreshChartData(boolean subtractOne){
+        if(subtractOne){
+            this.totalTickets--;
+            this.usedTickets++;
+        }
 
         PieDataSet dataSet = new PieDataSet(
                 new ArrayList<>(Arrays.asList(
-                        new Entry(noTickets,0),
-                        new Entry(0,1)
+                        new Entry(totalTickets,0),
+                        new Entry(usedTickets,1)
                 )),
                 "Tickets"
         );
@@ -98,12 +97,20 @@ public class QRCodeReaderActivity extends MenuActivity {
         dataSet.setColors(Arrays.asList(Color.rgb(136, 170, 255), Color.rgb(239, 155, 15)));
 
         this.chart.setData(new PieData(
-                new ArrayList<>(Arrays.asList("", "")),
+                new ArrayList<>(Arrays.asList("Total", "Validated")),
                 dataSet
         ));
-        this.chart.invalidate();
+        this.chart.notifyDataSetChanged();
     }
 
+
+    public void setTotalTickets(int totalTickets) {
+        this.totalTickets = totalTickets;
+    }
+
+    public void setUsedTickets(int usedTickets) {
+        this.usedTickets = usedTickets;
+    }
 
 
 

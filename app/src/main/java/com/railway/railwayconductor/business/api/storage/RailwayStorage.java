@@ -21,12 +21,15 @@ public class RailwayStorage implements Storage {
     private List<Ticket> tickets;
     private Railway schedule;
     private Inspector inspector;
+    private String publicKey;
+    private ArrayList<String> validatedIDs;
 
 
     public RailwayStorage() {
         this.storage = new HashMap<>();
         this.responseStorage = new HashMap<>();
         this.tickets = new ArrayList<>();
+        this.validatedIDs = new ArrayList<>();
     }
 
     @Override
@@ -81,5 +84,24 @@ public class RailwayStorage implements Storage {
         return this;
     }
 
+    @Override
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    @Override
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
+    }
+
+    @Override
+    public void addValidatedTicketID(String id){
+        this.validatedIDs.add(id);
+    }
+
+    @Override
+    public ArrayList<String> getValidatedIDs(){
+        return this.validatedIDs;
+    }
 
 }

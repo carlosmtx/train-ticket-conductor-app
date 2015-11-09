@@ -7,5 +7,8 @@
         <item android:id="@+id/menu_logout"
             android:icon="@android:drawable/ic_menu_edit"
             android:title="@string/menu_logout" />
+        <item android:id="@+id/menu_validate"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="@string/menu_validate_test" />
     </group>
 </menu>

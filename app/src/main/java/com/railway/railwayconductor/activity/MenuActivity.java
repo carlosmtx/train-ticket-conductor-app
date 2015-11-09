@@ -32,6 +32,9 @@ public class MenuActivity extends AppCompatActivity {
         else if(id == R.id.menu_logout){
             new LogoutTask(this);
         }
+        else if(id == R.id.menu_validate){
+            //new ValidateTicketsTask(this).execute();
+        }
 
 
         return super.onOptionsItemSelected(item);

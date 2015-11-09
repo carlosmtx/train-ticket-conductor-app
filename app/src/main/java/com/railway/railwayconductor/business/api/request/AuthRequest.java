@@ -43,6 +43,7 @@ public class AuthRequest implements APIRequest {
         api.request(this);
         Inspector inspector = new Inspector(future.get());
         DI.get().provideStorage().setToken(inspector.token);
+        DI.get().provideStorage().setPublicKey(inspector.publicKey);
         DI.get().provideStorage().setUser(inspector);
         return inspector;
     }

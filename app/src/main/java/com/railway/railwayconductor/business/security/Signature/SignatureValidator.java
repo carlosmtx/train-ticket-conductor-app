@@ -30,8 +30,8 @@ public class SignatureValidator {
         try {
             String value = strategy.getStringToHash();
             String signature = signatureProvider.provideSignature();
-
-            X509EncodedKeySpec spec = new X509EncodedKeySpec(Base64.decode(signature, Base64.DEFAULT));
+            String keyS = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL2N2KM0oOsV+LFNnFCRr/+oMoN2zp1I\nCq5mFqPNQccTHhCnFWG2lN0oxNvJwoPg0y+m1a6VDKBxaTW7JnCTNKUCAwEAAQ==";
+            X509EncodedKeySpec spec = new X509EncodedKeySpec(Base64.decode(keyS,Base64.DEFAULT));
             KeyFactory kf = KeyFactory.getInstance("RSA");
 
             PublicKey key = kf.generatePublic(spec);

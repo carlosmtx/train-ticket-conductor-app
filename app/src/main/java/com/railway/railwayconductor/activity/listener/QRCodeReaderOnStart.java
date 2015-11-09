@@ -43,13 +43,9 @@ public class QRCodeReaderOnStart extends AsyncTask<Void, Void, Void> {
         try {
             request = new TicketListRequest(new TicketListRequestData(activity.departure, activity.arrival,activity.timestamp));
             noTickets = request.getResponse();
-
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    activity.refreshChartData(noTickets);
-                }
-            });
+            activity.setUsedTickets(0);
+            activity.setTotalTickets(noTickets);
+            activity.refreshChartData(false);
 
         } catch (Exception e) {
             e.printStackTrace();
