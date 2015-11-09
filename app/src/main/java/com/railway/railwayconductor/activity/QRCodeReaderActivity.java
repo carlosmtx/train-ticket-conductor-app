@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -16,8 +18,10 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.R;
+import com.railway.railwayconductor.activity.listener.LogoutTask;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnStart;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnVerifyClick;
+import com.railway.railwayconductor.activity.listener.ValidateTicketsTask;
 import com.railway.railwayconductor.business.api.entity.Ticket;
 import com.railway.railwayconductor.business.api.storage.Storage;
 import com.railway.railwayconductor.business.api.storage.Storage.AlreadyExists;
@@ -26,8 +30,11 @@ import com.railway.railwayconductor.business.security.Ticket.SecureTicket;
 
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 
 public class QRCodeReaderActivity extends MenuActivity {
@@ -52,8 +59,9 @@ public class QRCodeReaderActivity extends MenuActivity {
         this.timestamp = getIntent().getStringExtra("departureTime");
 
         this.infoTrip = (TextView) findViewById(R.id.result);
-//        this.infoTrip.setText(departure + " to " + arrival + " on " + new Timestamp(Long.parseLong(timestamp)).toString());
-        /*PieChart chart = (PieChart) findViewById(R.id.chart);*/
+        this.infoTrip.setText(departure + " to " + arrival + " on "
+                + new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.UK).format(new Timestamp(Long.parseLong(timestamp))));
+
         new QRCodeReaderOnStart(this).execute();
         findViewById(R.id.qrcodereader_verify_button).setOnClickListener(new QRCodeReaderOnVerifyClick());
     }
@@ -126,5 +134,34 @@ public class QRCodeReaderActivity extends MenuActivity {
         ));
         //this.chart.notifyDataSetChanged();
         this.chart.invalidate();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_with_validate, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_select_schedule) {
+            Intent intent = new Intent(this, SelectStationsActivity.class);
+            this.startActivity(intent);
+        }
+        else if(id == R.id.menu_validate){
+            new ValidateTicketsTask(this).execute();
+        }
+        else if(id == R.id.menu_logout){
+            new LogoutTask(this);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

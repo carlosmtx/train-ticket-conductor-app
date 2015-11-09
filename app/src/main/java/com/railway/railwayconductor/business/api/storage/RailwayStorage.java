@@ -158,6 +158,11 @@ public class RailwayStorage implements Storage {
     }
 
     @Override
+    public void resetValidatedTickets(){
+        this.validatedIDs.clear();
+    }
+
+    @Override
     public ArrayList<String> getValidatedIDs(){
         return this.validatedIDs;
     }

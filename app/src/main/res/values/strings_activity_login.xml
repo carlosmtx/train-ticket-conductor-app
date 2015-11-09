@@ -1,5 +1,5 @@
 <resources>
-    <string name="title_activity_login">Login</string>
+    <string name="title_activity_login">Inspector</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">username</string>
