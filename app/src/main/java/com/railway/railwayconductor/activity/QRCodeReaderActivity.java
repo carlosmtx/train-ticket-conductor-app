@@ -47,10 +47,10 @@ public class QRCodeReaderActivity extends MenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_reader);
         this.chart = (PieChart)findViewById(R.id.chart);
-        /*this.arrival = getIntent().getStringExtra("arrival");
+        this.arrival = getIntent().getStringExtra("arrival");
         this.departure = getIntent().getStringExtra("departure");
         this.timestamp = getIntent().getStringExtra("departureTime");
-*/
+
         this.infoTrip = (TextView) findViewById(R.id.result);
 //        this.infoTrip.setText(departure + " to " + arrival + " on " + new Timestamp(Long.parseLong(timestamp)).toString());
         /*PieChart chart = (PieChart) findViewById(R.id.chart);*/

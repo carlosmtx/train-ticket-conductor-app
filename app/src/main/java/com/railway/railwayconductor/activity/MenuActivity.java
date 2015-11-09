@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.railway.railwayconductor.R;
 import com.railway.railwayconductor.activity.listener.LogoutTask;
+import com.railway.railwayconductor.activity.listener.ValidateTicketsTask;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -33,7 +34,7 @@ public class MenuActivity extends AppCompatActivity {
             new LogoutTask(this);
         }
         else if(id == R.id.menu_validate){
-            //new ValidateTicketsTask(this).execute();
+            new ValidateTicketsTask(this).execute();
         }
 
 

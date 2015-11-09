@@ -45,7 +45,7 @@ public class ValidateTicketsTask extends AsyncTask<Void, Void, String> {
             toast = Toast.makeText(activity,response,Toast.LENGTH_LONG);
             Intent intent = new Intent(activity, SelectStationsActivity.class);
             activity.startActivity(intent);
-            //activity.finish();
+            activity.finish();
         } else {
             toast = Toast.makeText(activity,"An error occurred",Toast.LENGTH_LONG);
         }
