@@ -64,11 +64,20 @@ public class QRCodeReaderActivity extends MenuActivity {
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
             if (scanResult != null) {
                 Ticket ticket = new Ticket(new JSONObject(scanResult.getContents()));
-                SecureTicket secureTicket = new SecureTicket(ticket);
-                SignatureValidator sv = new SignatureValidator(secureTicket,secureTicket);
+                boolean validate;
+                if(ticket.getDeparture().equals(this.departure) &&
+                        ticket.getArrival().equals(this.arrival) &&
+                        ticket.getDepartureTimeTimestamp().equals(this.timestamp)){
+                    SecureTicket secureTicket = new SecureTicket(ticket);
+                    SignatureValidator sv = new SignatureValidator(secureTicket,secureTicket);
+                    validate = sv.validate();
+                    message = validate ? "Valid Ticket" : "Invalid Ticket";
+                }
+                else{
+                    validate = false;
+                    message = "This ticket can't be used on this trip";
+                }
 
-                boolean validate = sv.validate();
-                message = validate ? "Valid Ticket" : "Invalid Ticket";
                 icon = validate ? R.drawable.valid : R.drawable.invalid;
                 if(validate){
                     DI.get().provideStorage().addValidatedTicketID(Integer.toString(ticket.getId()));
