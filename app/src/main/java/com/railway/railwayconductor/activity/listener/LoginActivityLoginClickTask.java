@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.activity.LoginActivity;
 import com.railway.railwayconductor.activity.SelectStationsActivity;
 import com.railway.railwayconductor.business.api.entity.Inspector;
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeoutException;
 public class LoginActivityLoginClickTask extends AsyncTask<String,Void,Inspector> {
     private Activity activity;
     private AuthRequestData data;
+    boolean already = false;
 
     LoginActivityLoginClickTask(Activity view,AuthRequestData data){
         this.activity = view;
@@ -45,7 +47,7 @@ public class LoginActivityLoginClickTask extends AsyncTask<String,Void,Inspector
         Toast toast;
         ((LoginActivity) activity).enableButtons();
         if (response != null){
-            toast = Toast.makeText(activity,"Logging in...",Toast.LENGTH_LONG);
+            toast = Toast.makeText(activity,"Logging in..." ,Toast.LENGTH_LONG);
             Intent intent = new Intent(activity, SelectStationsActivity.class);
             activity.startActivity(intent);
         } else {

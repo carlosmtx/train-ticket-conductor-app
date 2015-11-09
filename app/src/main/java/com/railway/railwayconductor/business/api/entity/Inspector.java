@@ -3,11 +3,12 @@ package com.railway.railwayconductor.business.api.entity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by Leonel on 07/11/2015.
  */
-public class Inspector {
-    public JSONObject raw;
+public class Inspector implements Serializable{
 
     public String id;
     public String name;
@@ -16,7 +17,6 @@ public class Inspector {
     public String publicKey;
 
     public Inspector(JSONObject response) throws JSONException {
-        this.raw = response;
         this.id = response.get("id").toString();
         this.name = (response.isNull("name")) ? "" : (response.get("name").toString());
         this.email = response.get("email").toString();

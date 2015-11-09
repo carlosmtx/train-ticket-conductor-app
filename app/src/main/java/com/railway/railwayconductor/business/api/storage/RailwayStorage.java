@@ -1,5 +1,10 @@
 package com.railway.railwayconductor.business.api.storage;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.google.android.gms.analytics.Logger;
+import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.business.api.entity.Inspector;
 import com.railway.railwayconductor.business.api.entity.Railway;
 import com.railway.railwayconductor.business.api.entity.Ticket;
@@ -7,6 +12,12 @@ import com.railway.railwayconductor.business.api.entity.User;
 
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +27,7 @@ import java.util.List;
  * com.railway.railway.business.api.storage
  */
 public class RailwayStorage implements Storage {
+
     private HashMap<String,String> storage;
     private HashMap<String,JSONObject> responseStorage;
     private List<Ticket> tickets;
@@ -24,12 +36,53 @@ public class RailwayStorage implements Storage {
     private String publicKey;
     private ArrayList<String> validatedIDs;
 
+
     public RailwayStorage() {
+
+        final Context context = DI.get().provideAppContext();
         this.storage = new HashMap<>();
         this.responseStorage = new HashMap<>();
         this.tickets = new ArrayList<>();
         this.validatedIDs = new ArrayList<>();
+        try {
+            Log.println(Logger.LogLevel.ERROR,"DEBUG","Loading Inspector");
+            FileInputStream file = context.openFileInput("inspector");
+            ObjectInputStream oin = new ObjectInputStream(file);
+            inspector = (Inspector)oin.readObject();
+            Log.println(Logger.LogLevel.ERROR,"DEBUG","Loading Tickets");
+
+            file = context.openFileInput("tickets");
+            oin = new ObjectInputStream(file);
+            validatedIDs = (ArrayList<String>)oin.readObject();
+            Log.println(Logger.LogLevel.ERROR,"DEBUG","All Loaded");
+
+        } catch (ClassNotFoundException | IOException e) {
+            tickets = new ArrayList<>();
+            validatedIDs = new ArrayList<>();
+        }
+
     }
+
+    private void save()  {
+        try {
+            final Context context = DI.get().provideAppContext();
+
+            FileOutputStream file = context.openFileOutput("inspector", Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(file);
+            oos.writeObject(this.getInspector());
+            oos.close();
+
+            file = context.openFileOutput("tickets",Context.MODE_PRIVATE);
+            oos = new ObjectOutputStream(file);
+            oos.writeObject(this.getValidatedIDs());
+            oos.close();
+        } catch (Exception e) {
+            int r = 2;
+            r++;
+        }
+
+    }
+
 
     @Override
     public String getToken() {
@@ -39,6 +92,7 @@ public class RailwayStorage implements Storage {
     @Override
     public void setToken(String token) {
         storage.put("token",token);
+        save();
     }
 
     @Override
@@ -59,6 +113,7 @@ public class RailwayStorage implements Storage {
     @Override
     public void setUser(Inspector ins) {
         this.inspector = ins;
+        save();
     }
 
 
