@@ -28,7 +28,7 @@ public class Ticket implements Serializable {
         this.arrival = t.get("arrival").toString();
         this.validated = (boolean) t.get("validated");
         this.price = Float.valueOf(t.get("price").toString());
-        this.departureTime =  Long.toString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(t.get("departureTime").toString()).getTime());
+        this.departureTime =  t.get("departureTime").toString();
         this.signature = t.get("signature").toString();
 
     }
@@ -54,6 +54,10 @@ public class Ticket implements Serializable {
 
     public String getDepartureTime() {
         return departureTime;
+    }
+
+    public String getDepartureTimeTimestamp() throws ParseException {
+        return Long.toString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(this.departureTime).getTime());
     }
 
     public String getSignature() {
