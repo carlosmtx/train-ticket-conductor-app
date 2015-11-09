@@ -24,7 +24,6 @@ public class RailwayStorage implements Storage {
     private String publicKey;
     private ArrayList<String> validatedIDs;
 
-
     public RailwayStorage() {
         this.storage = new HashMap<>();
         this.responseStorage = new HashMap<>();
@@ -95,7 +94,11 @@ public class RailwayStorage implements Storage {
     }
 
     @Override
-    public void addValidatedTicketID(String id){
+    public void addValidatedTicketID(String id) throws AlreadyExists {
+        for(String _id : this.validatedIDs){
+            if (id.equals(_id))
+                throw new AlreadyExists();
+        }
         this.validatedIDs.add(id);
     }
 

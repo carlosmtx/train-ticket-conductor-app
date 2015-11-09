@@ -16,7 +16,9 @@ import java.util.List;
  * com.railway.railway.business.api.storage
  */
 public interface Storage {
+    public class AlreadyExists extends Exception{
 
+    }
     String getToken();
     void setToken(String token);
 
@@ -33,7 +35,7 @@ public interface Storage {
     void setPublicKey(String publicKey);
 
     // Quando termina uma viagem, o Inspector envia para o servidor os ID's dos bilhetes validados
-    void addValidatedTicketID(String id);
+    void addValidatedTicketID(String id) throws AlreadyExists;
     ArrayList<String> getValidatedIDs();
 
     List<Ticket> getTickets();

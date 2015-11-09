@@ -25,32 +25,34 @@ import java.util.concurrent.TimeoutException;
  * Created by cteixeira on 02-11-2015.
  *
  */
-public class QRCodeReaderOnStart extends AsyncTask<Void, Void, Void> {
+public class QRCodeReaderOnStart extends AsyncTask<Void, Void, Integer> {
 
 
 
     public QRCodeReaderActivity activity;
+    int noTickets;
 
     public QRCodeReaderOnStart(QRCodeReaderActivity act){
         this.activity = act;
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
-        TicketListRequest request = null;
-        final int noTickets;
-
+    protected Integer doInBackground(Void... voids) {
+        TicketListRequest request;
         try {
             request = new TicketListRequest(new TicketListRequestData(activity.departure, activity.arrival,activity.timestamp));
             noTickets = request.getResponse();
-            activity.setUsedTickets(0);
-            activity.setTotalTickets(noTickets);
-            activity.refreshChartData(false);
-
+            return noTickets;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        return 0;
+    }
+
+    @Override
+    protected void onPostExecute(Integer integer) {
+        activity.totalTickets = integer;
+        activity.refreshChartData();
     }
 }
