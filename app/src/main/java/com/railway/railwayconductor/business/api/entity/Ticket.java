@@ -4,6 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Leonel on 23/10/2015.
@@ -20,13 +22,13 @@ public class Ticket implements Serializable {
 
 
 
-    public Ticket(JSONObject t) throws JSONException {
+    public Ticket(JSONObject t) throws JSONException, ParseException {
         this.id = (Integer) t.get("id");
         this.departure = t.get("departure").toString();
         this.arrival = t.get("arrival").toString();
         this.validated = (boolean) t.get("validated");
         this.price = Float.valueOf(t.get("price").toString());
-        this.departureTime =  t.get("departureTime").toString();
+        this.departureTime =  Long.toString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(t.get("departureTime").toString()).getTime());
         this.signature = t.get("signature").toString();
 
     }
