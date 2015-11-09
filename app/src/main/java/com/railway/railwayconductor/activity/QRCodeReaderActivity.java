@@ -11,6 +11,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.railway.railwayconductor.DI;
@@ -36,8 +37,8 @@ public class QRCodeReaderActivity extends MenuActivity {
     public String timestamp = "1422820800000";
 
     public PieChart chart;
-    private int totalTickets;
-    private int usedTickets;
+    public int totalTickets;
+    public int usedTickets;
     TextView infoTrip;
 
 
@@ -45,15 +46,14 @@ public class QRCodeReaderActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_reader);
-
-        this.arrival = getIntent().getStringExtra("arrival");
+        this.chart = (PieChart)findViewById(R.id.chart);
+        /*this.arrival = getIntent().getStringExtra("arrival");
         this.departure = getIntent().getStringExtra("departure");
         this.timestamp = getIntent().getStringExtra("departureTime");
-
-        this.chart = initializeChart();
+*/
         this.infoTrip = (TextView) findViewById(R.id.result);
 //        this.infoTrip.setText(departure + " to " + arrival + " on " + new Timestamp(Long.parseLong(timestamp)).toString());
-
+        /*PieChart chart = (PieChart) findViewById(R.id.chart);*/
         new QRCodeReaderOnStart(this).execute();
         findViewById(R.id.qrcodereader_verify_button).setOnClickListener(new QRCodeReaderOnVerifyClick());
     }
@@ -80,6 +80,7 @@ public class QRCodeReaderActivity extends MenuActivity {
         }
         catch (Exception e) {
             icon = R.drawable.invalid;
+            message = "Something went wrong";
         } finally {
             new AlertDialog.Builder(this)
                     .setTitle("Ticket")
@@ -87,52 +88,34 @@ public class QRCodeReaderActivity extends MenuActivity {
                     .setPositiveButton(android.R.string.yes, null)
                     .setIcon(icon)
                     .show();
-            refreshChartData(true);
+            refreshChartData();
         }
 
     }
 
-    public PieChart initializeChart(){
-        PieChart chart = (PieChart) findViewById(R.id.chart);
-        chart.notifyDataSetChanged();
-        chart.invalidate();
-        return chart;
-    }
-
-    public void refreshChartData(boolean subtractOne){
-        if(subtractOne){
-            this.totalTickets--;
-            this.usedTickets++;
-        }
+    public void refreshChartData(){
+        this.usedTickets = DI.get().provideStorage().getValidatedIDs().size();
 
         PieDataSet dataSet = new PieDataSet(
                 new ArrayList<>(Arrays.asList(
-                        new Entry(totalTickets,0),
+                        new Entry(totalTickets-usedTickets,0),
                         new Entry(usedTickets,1)
                 )),
-                "Tickets"
+                ""
         );
-
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         dataSet.setSliceSpace(2f);
         dataSet.setSelectionShift(5f);
         dataSet.setColors(Arrays.asList(Color.rgb(136, 170, 255), Color.rgb(239, 155, 15)));
 
         this.chart.setData(new PieData(
-                new ArrayList<>(Arrays.asList("Total", "Validated")),
+                new ArrayList<>(Arrays.asList(
+                        "Total",
+                        "Validated")
+                ),
                 dataSet
         ));
-        this.chart.notifyDataSetChanged();
+        //this.chart.notifyDataSetChanged();
+        this.chart.invalidate();
     }
-
-
-    public void setTotalTickets(int totalTickets) {
-        this.totalTickets = totalTickets;
-    }
-
-    public void setUsedTickets(int usedTickets) {
-        this.usedTickets = usedTickets;
-    }
-
-
-
 }

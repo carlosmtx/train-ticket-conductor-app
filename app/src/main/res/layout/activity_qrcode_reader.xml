@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/qrcodereader_main_scrollview"
-        >
+        android:layout_alignParentTop="false"
+        android:layout_above="@+id/qrcodereader_verify_button">
 
 
         <RelativeLayout android:id="@+id/relative_layout"
@@ -43,18 +44,14 @@
         </RelativeLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/qrcodereader_layout_bottom_button"
-        android:layout_width="fill_parent"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/qrcodereader_verify"
+        android:id="@+id/qrcodereader_verify_button"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/qrcodereader_verify"
-            android:id="@+id/qrcodereader_verify_button" />
-    </LinearLayout>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
