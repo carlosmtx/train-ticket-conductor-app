@@ -44,6 +44,7 @@ public class ValidateTicketsTask extends AsyncTask<Void, Void, String> {
         if (response != null){
             toast = Toast.makeText(activity,response,Toast.LENGTH_LONG);
             Intent intent = new Intent(activity, SelectStationsActivity.class);
+            DI.get().provideStorage().resetValidatedTickets();
             activity.startActivity(intent);
             activity.finish();
         } else {

@@ -37,6 +37,7 @@ public interface Storage {
     // Quando termina uma viagem, o Inspector envia para o servidor os ID's dos bilhetes validados
     void addValidatedTicketID(String id) throws AlreadyExists;
     ArrayList<String> getValidatedIDs();
+    void resetValidatedTickets();
 
     List<Ticket> getTickets();
     Storage setTickets(List<Ticket> val);
