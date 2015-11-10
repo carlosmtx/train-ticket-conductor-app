@@ -3,10 +3,8 @@ package com.railway.railwayconductor.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
-import com.google.android.gms.analytics.Logger;
 import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.R;
 import com.railway.railwayconductor.activity.listener.LoginActivityLoginClick;
