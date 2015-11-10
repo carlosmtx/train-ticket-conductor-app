@@ -14,7 +14,6 @@ import com.railway.railwayconductor.business.api.entity.Ticket;
 import com.railway.railwayconductor.business.api.storage.RailwayStorage;
 import com.railway.railwayconductor.business.api.storage.Storage;
 
-
 import java.net.CookieHandler;
 import java.net.CookieManager;
 

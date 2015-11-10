@@ -8,7 +8,6 @@ import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.business.api.entity.Inspector;
 import com.railway.railwayconductor.business.api.entity.Railway;
 import com.railway.railwayconductor.business.api.entity.Ticket;
-import com.railway.railwayconductor.business.api.entity.User;
 
 import org.json.JSONObject;
 
@@ -17,7 +16,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +70,7 @@ public class RailwayStorage implements Storage {
             oos.writeObject(this.getInspector());
             oos.close();
 
-            file = context.openFileOutput("tickets",Context.MODE_PRIVATE);
+            file = context.openFileOutput("tickets", Context.MODE_PRIVATE);
             oos = new ObjectOutputStream(file);
             oos.writeObject(this.getValidatedIDs());
             oos.close();

@@ -1,8 +1,5 @@
 package com.railway.railwayconductor.business.api.request;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-
 /**
  * Created by Leonel on 07/11/2015.
  */

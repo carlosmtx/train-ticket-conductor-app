@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.activity.LoginActivity;
 import com.railway.railwayconductor.activity.SelectStationsActivity;
 import com.railway.railwayconductor.business.api.entity.Inspector;

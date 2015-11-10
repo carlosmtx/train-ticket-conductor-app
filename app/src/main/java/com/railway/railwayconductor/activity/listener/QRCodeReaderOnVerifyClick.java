@@ -1,11 +1,8 @@
 package com.railway.railwayconductor.activity.listener;
 
-import android.content.Intent;
-import android.preference.PreferenceManager;
 import android.view.View;
 
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.railway.railwayconductor.activity.QRCodeReaderActivity;
 
 /**

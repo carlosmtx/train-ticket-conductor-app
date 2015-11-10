@@ -1,7 +1,6 @@
 package com.railway.railwayconductor.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.railway.railwayconductor.activity.listener.QRCodeReaderOnStart;
 import com.railway.railwayconductor.activity.listener.QRCodeReaderOnVerifyClick;
 import com.railway.railwayconductor.activity.listener.ValidateTicketsTask;
 import com.railway.railwayconductor.business.api.entity.Ticket;
-import com.railway.railwayconductor.business.api.storage.Storage;
 import com.railway.railwayconductor.business.api.storage.Storage.AlreadyExists;
 import com.railway.railwayconductor.business.security.Signature.SignatureValidator;
 import com.railway.railwayconductor.business.security.Ticket.SecureTicket;

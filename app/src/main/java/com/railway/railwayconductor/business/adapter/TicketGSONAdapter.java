@@ -9,10 +9,6 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.railway.railwayconductor.business.api.entity.Ticket;
 
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.lang.reflect.Type;
 
 /**

@@ -6,7 +6,6 @@ import com.android.volley.toolbox.RequestFuture;
 import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.business.api.API;
 import com.railway.railwayconductor.business.api.entity.Inspector;
-import com.railway.railwayconductor.business.api.entity.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

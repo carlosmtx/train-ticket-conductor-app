@@ -3,13 +3,10 @@ package com.railway.railwayconductor.activity.listener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 
 import com.railway.railwayconductor.R;
-import com.railway.railwayconductor.activity.QRCodeReaderActivity;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

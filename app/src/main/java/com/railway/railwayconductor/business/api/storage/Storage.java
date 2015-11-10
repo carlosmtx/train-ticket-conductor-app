@@ -4,7 +4,6 @@ package com.railway.railwayconductor.business.api.storage;
 import com.railway.railwayconductor.business.api.entity.Inspector;
 import com.railway.railwayconductor.business.api.entity.Railway;
 import com.railway.railwayconductor.business.api.entity.Ticket;
-import com.railway.railwayconductor.business.api.entity.User;
 
 import org.json.JSONObject;
 
