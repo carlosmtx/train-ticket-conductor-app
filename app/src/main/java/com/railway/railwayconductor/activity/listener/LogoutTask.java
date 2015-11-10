@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import com.railway.railwayconductor.DI;
 import com.railway.railwayconductor.activity.LoginActivity;
 
 /**
@@ -26,6 +27,8 @@ public class LogoutTask {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                DI.get().provideStorage().setToken("");
+                DI.get().provideStorage().setUser(null);
                 Intent intent = new Intent(activity, LoginActivity.class);
                 activity.startActivity(intent);
                 activity.finish();
