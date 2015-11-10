@@ -76,7 +76,6 @@ public class RailwayStorage implements Storage {
             oos.close();
         } catch (Exception e) {
             int r = 2;
-            r++;
         }
 
     }
@@ -138,7 +137,7 @@ public class RailwayStorage implements Storage {
 
     @Override
     public String getPublicKey() {
-        return publicKey;
+        return this.inspector.publicKey;
     }
 
     @Override

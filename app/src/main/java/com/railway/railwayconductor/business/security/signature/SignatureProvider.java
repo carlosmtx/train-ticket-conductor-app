@@ -1,4 +1,4 @@
-package com.railway.railwayconductor.business.security.Signature;
+package com.railway.railwayconductor.business.security.signature;
 
 /**
  * Created by cteixeira on 08-11-2015.

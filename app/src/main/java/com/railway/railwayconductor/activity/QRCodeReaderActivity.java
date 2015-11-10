@@ -23,8 +23,8 @@ import com.railway.railwayconductor.activity.listener.QRCodeReaderOnVerifyClick;
 import com.railway.railwayconductor.activity.listener.ValidateTicketsTask;
 import com.railway.railwayconductor.business.api.entity.Ticket;
 import com.railway.railwayconductor.business.api.storage.Storage.AlreadyExists;
-import com.railway.railwayconductor.business.security.Signature.SignatureValidator;
-import com.railway.railwayconductor.business.security.Ticket.SecureTicket;
+import com.railway.railwayconductor.business.security.signature.SignatureValidator;
+import com.railway.railwayconductor.business.security.TicketValidator;
 
 import org.json.JSONObject;
 
@@ -73,10 +73,10 @@ public class QRCodeReaderActivity extends MenuActivity {
                 boolean validate;
                 if(ticket.getDeparture().equals(this.departure) &&
                         ticket.getArrival().equals(this.arrival) &&
-                        ticket.getDepartureTimeTimestamp().equals(this.timestamp)){
-                    SecureTicket secureTicket = new SecureTicket(ticket);
-                    SignatureValidator sv = new SignatureValidator(secureTicket,secureTicket);
-                    validate = sv.validate();
+                        ticket.getDepartureTimeTimestamp().equals(this.timestamp)
+                        ){
+                    TicketValidator secureTicket = new TicketValidator(ticket,DI.get().provideStorage());
+                    validate = secureTicket.isValid();
                     message = validate ? "Valid Ticket" : "Invalid Ticket";
                 }
                 else{
