@@ -29,6 +29,7 @@ public class MenuActivity extends AppCompatActivity {
         if (id == R.id.menu_select_schedule) {
             Intent intent = new Intent(this, SelectStationsActivity.class);
             this.startActivity(intent);
+            this.finish();
         }
         else if(id == R.id.menu_logout){
             new LogoutTask(this);

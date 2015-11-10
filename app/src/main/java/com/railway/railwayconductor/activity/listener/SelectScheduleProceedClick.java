@@ -20,5 +20,6 @@ public class SelectScheduleProceedClick implements View.OnClickListener {
         intent.putExtra("arrival", activity.getSelectedArrival());
         intent.putExtra("dayDepartureTime",activity.getSelectedDate());
         activity.startActivity(intent);
+        activity.finish();
     }
 }

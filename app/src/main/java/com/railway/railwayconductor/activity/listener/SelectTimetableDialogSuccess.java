@@ -33,5 +33,6 @@ public class SelectTimetableDialogSuccess implements DialogInterface.OnClickList
         intent.putExtra("departure", departure);
         intent.putExtra("departureTime", String.valueOf(departureTime.getTime()));
         activity.startActivity(intent);
+        activity.finish();
     }
 }

@@ -26,6 +26,7 @@ public class LoginActivity extends Activity {
         if (DI.get().provideStorage().getInspector() != null) {
             Intent intent = new Intent(this, SelectStationsActivity.class);
             this.startActivity(intent);
+            this.finish();
         }
     }
 
