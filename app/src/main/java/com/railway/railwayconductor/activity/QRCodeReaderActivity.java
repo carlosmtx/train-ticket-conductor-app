@@ -55,7 +55,6 @@ public class QRCodeReaderActivity extends MenuActivity {
         this.arrival = getIntent().getStringExtra("arrival");
         this.departure = getIntent().getStringExtra("departure");
         this.timestamp = getIntent().getStringExtra("departureTime");
-
         this.infoTrip = (TextView) findViewById(R.id.result);
         this.infoTrip.setText(departure + " to " + arrival + " on "
                 + new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.UK).format(new Timestamp(Long.parseLong(timestamp))));

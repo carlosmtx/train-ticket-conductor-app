@@ -2,6 +2,8 @@ package com.railway.railwayconductor.business.security.strategy;
 
 import com.railway.railwayconductor.business.api.entity.Ticket;
 
+import java.text.ParseException;
+
 /**
  * Created by cteixeira on 10-11-2015.
  */
@@ -15,6 +17,11 @@ public class TicketHashStrategy implements HashStrategy{
 
     @Override
     public String getStringToHash() {
-        return ticket.getId() + ticket.getDeparture() + ticket.getArrival() + ticket.getDepartureTime();
+        try {
+            return ticket.getId() + ticket.getDeparture() + ticket.getArrival() + ticket.getDepartureTimeTimestamp();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
